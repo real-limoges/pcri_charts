@@ -12,3 +12,14 @@ fund_type_replace = {"BUYOUT" : "Buyout",
 					 "OTHER" : "Other",
 					 "SECOND" : "Secondary",
 					 "VC" : "VC"}
+
+region_replace = {"AFRICA": "Africa",
+				  "ASIA" : "Asia",
+				  "EURASIA" : "Eurasia",
+				  "EUROPE" : "Europe",
+				  "MIDDLE EAST" : "Middle East",
+				  "MULTIGEOGRAPHY" : "Multi-Geography",
+				  "NORTH AMERICA" : "North America",
+				  "OCEANIA" : "Oceania",
+				  "SOUTH AMERICA" : "South America",
+				  "UNITED STATES" : "United States"}
