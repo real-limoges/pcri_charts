@@ -11,8 +11,11 @@ Underlying data is not available to be pushed
 
 """
 
+#user made modules
+import build_bar_charts
+
 def main():
 
-	print "Hello World"
+	build_bar_charts.build_charts()
 
 main()
