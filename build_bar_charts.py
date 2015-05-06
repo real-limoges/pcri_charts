@@ -80,6 +80,33 @@ def yearly_investment_types():
 	plt.savefig(os.path.join(SAVE_PATH, 'yearly_investment_types.png'), 
 				bbox_inches = 'tight')
 
+def gp_year_founded():
+	#Creates a stacked bar chart of gp_type by year_founded
+
+	df = pd.read_csv(os.path.join(OPEN_PATH, 'gp_view.csv'), header = 0)
+
+	#Clean up gp founded data - overwrites original
+	df = [['YEAR_FOUNDED', 'GP_TYPE']]
+	df = df.dropna()
+	df = df[df.YEAR_FOUNDED >= 1980]
+	df = df[df.YEAR_FOUNDED <= 2012]
+
+	df = pd.crosstab(df.YEAR_FOUNDED, [df.GP_TYPE],
+					 rownames = ['YEAR_FOUNDED'], colnames = ['GP_TYPE'])
+
+	#Drops Other from gp_type
+	df = df.drop('OTHER', axis = 1)
+
+	fig, ax = cht.setup_stacked_chart(df)
+
+	#Formatting for chart
+	ax.set_title('Number of Private Capital Firms by Year Founded\n', 
+				 fontsize = fontsize)
+	plt.xlim([1980,2013])
+
+	plt.savefig(os.path.join(SAVE_PATH, 'gp_type.png'), bbox_inches = 'tight')
+
 def build_charts():
 	fund_vintage()
 	yearly_investment_types()
+	gp_year_founded()
