@@ -17,6 +17,7 @@ import global_var_list
 
 #Global Variables
 bar_colors = global_var_list.bar_colors
+pie_colors = global_var_list.pie_colors
 
 def setup_stacked_chart(df, width = 0.3):
 	#Sets up a stacked bar chart
@@ -47,3 +48,22 @@ def setup_stacked_chart(df, width = 0.3):
 	ax.get_yaxis().set_major_formatter(matplotlib.ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
 
 	return fig, ax
+
+def build_pie_subplot(df, fig, num):
+	#Builds a subplot for a pie chart; positioning passed in as a number
+
+	ax = fig.add_subplot(num)
+
+	#Formats the wedges of the pie chart
+	wedges = ax.pie(df, colors = pie_colors, autopct = '%.0f')
+	for pie_wedge in wedges[0]:
+		pie_wedge.set_edgecolor('white')
+
+	#Sets up positioning of legend based on passed parameter 'num'
+	if num == 122:
+		leg = ax.legend(labels = df.index.values, loc = (.8,-.1), fontsize = 'medium')
+	else:
+		leg = ax.legend(labels = df.index.values, loc = (-.1, -.1), fontsize = 'medium')
+	leg.get_frame().set_linewidth(False)
+
+	return ax

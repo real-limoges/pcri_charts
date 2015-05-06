@@ -11,13 +11,13 @@ Underlying data is not available to be pushed
 
 """
 
-#user made modules
-=======
 #User Made Modules
 import build_bar_charts
+import build_pie_charts
 
 def main():
 
 	build_bar_charts.build_charts()
+	build_pie_charts.build_charts()
 
 main()
