@@ -11,7 +11,11 @@ Underlying data is not available to be pushed
 
 """
 
+<<<<<<< HEAD
 #user made modules
+=======
+#User Made Modules
+>>>>>>> origin/bar-charts
 import build_bar_charts
 
 def main():
