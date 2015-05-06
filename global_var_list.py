@@ -1,5 +1,4 @@
 OPEN_PATH = "K:/Producers/Released Database/Version 2.2/SQL_Exported_Files"
-<<<<<<< HEAD
 SAVE_PATH = "K:/Producers/Released Database/Version 2.2/Dashboard"
 =======
 SAVE_PATH = "K:/Producers/Released Database/Version 2.2/Dashboard"
@@ -13,4 +12,3 @@ fund_type_replace = {"BUYOUT" : "Buyout",
 					 "OTHER" : "Other",
 					 "SECOND" : "Secondary",
 					 "VC" : "VC"}
->>>>>>> origin/bar-charts
