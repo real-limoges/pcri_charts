@@ -106,7 +106,51 @@ def gp_year_founded():
 
 	plt.savefig(os.path.join(SAVE_PATH, 'gp_type.png'), bbox_inches = 'tight')
 
+def cashflow_type_by_year():
+	#Creates a stacked bar chart of fund type by vintage year based on cashflow data
+
+	df = pd.read_csv(os.path.join(OPEN_PATH, 'fund_quarterly_cashflow_view.csv'), 
+					 header = 0)
+	fund_df = pd.read_csv(os.path.join(OPEN_PATH, 'fund_view.csv'), header = 0)
+
+	#Cleans Fund Data to be merged into 
+	fund_df = fund_df[['FUND_ID', 'FUND_TYPE', 'VINTAGE_YEAR']]
+	fund_df = fund_df[ fund_df.VINTAGE_YEAR >= 1980 ]
+	fund_df = fund_df.dropna()
+
+	df = df.dropna()
+
+	#Holder variable for aggregation purposes
+	df['ONES'] = 1
+
+	#Groups data to remove; collapsing panel data to cross sectional
+	df = df.groupby(['FUND_ID'], as_index = False)
+	df = df.agg( {'ONES' : { 'name' : 'mean' } })
+
+	df = pd.merge(left = df, right = fund_df, how = 'inner',
+				  left_on = 'FUND_ID', right_on = 'FUND_ID')
+
+	df = pd.crosstab(df.VINTAGE_YEAR, df.FUND_TYPE, 
+					 rownames = ['VINTAGE_YEAR'], colnames = ['FUND_TYPE'])
+
+	#Removes Growth Equity, Other, and Second from the dataset
+	for col in ['GROWTH EQUITY', 'OTHER', 'SECOND']:
+		df = df.drop(col, axis = 1)
+
+	fig, ax = cht.setup_stacked_chart(df)
+
+	#Custom Font Size for this chart
+	font = 26
+
+	#Formatting for chart
+	ax.set_title("Number of Funds wiht Cashflows\n by Vintage Year\n", fontsize = font)
+	plt.xlim([1990, 2013])
+
+	plt.savefig(os.path.join(SAVE_PATH, 'cashflow_type_by_year.png'), 
+				bbox_inches = 'tight')
+
 def build_charts():
 	fund_vintage()
 	yearly_investment_types()
 	gp_year_founded()
+	cashflow_type_by_year()
