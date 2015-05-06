@@ -49,6 +49,37 @@ def fund_vintage():
 
 	plt.savefig(os.path.join(SAVE_PATH, 'fund_vintage.png'), bbox_inches = 'tight')
 
+def yearly_investment_types():
+	#Creates a stacked bar chart of yearly investment types by year
+
+	df = pd.read_csv(os.path.join(OPEN_PATH, 'investment_view.csv'), header = 0)
+
+	#Clean up investment type data - overwrites original
+	df = df[['DATE', 'INVESTMENT_CATEGORY']]
+
+	df['DATE'] = df['DATE'].apply(str)
+	df['DATE'] = df['DATE'].apply(lambda x : int( x[:4] ))
+	df = df[ df.DATE >= 1980 ]
+	df = df[ df.DATE <= 2015 ]
+
+	#Removes Other and Second category
+	for s in ['OTHER', 'SECOND']:
+		df = df[ df.INVESTMENT_CATEGORY != s ]
+
+	#Makes investment categories more readable
+	df['INVESTMENT_CATEGORY'].replace(global_var_list.fund_type_replace, inplace = True)
+
+	df = pd.crosstab(df.DATE, [df.INVESTMENT_CATEGORY],
+					 rownames = ['DATE'], colnames = ['INVESTMENT_CATEGORY'])
+	fig, ax = cht.setup_stacked_chart(df)
+
+	#Formatting for chart
+	ax.set_title("Number of Investments per Year\n", fontsize = fontsize)
+	plt.xlim([1990, 2013])
+
+	plt.savefig(os.path.join(SAVE_PATH, 'yearly_investment_types.png'), 
+				bbox_inches = 'tight')
 
 def build_charts():
 	fund_vintage()
+	yearly_investment_types()
