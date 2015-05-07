@@ -2,7 +2,7 @@
 
 """
 By : Real Limoges
-Last Updated : 5/6/15
+Last Updated : 5/7/15
 
 This script creates the data and formatting for the pie charts for the
 data description paper
@@ -66,13 +66,15 @@ def fund_region(fig):
 
 
 def remove_outliers(df, col):
-	#Removes outliers (less than 2% of data) and adds 1-sum back to "Other"
+	#Removes outliers and adds to index "Other" if exists
 
-	df[col] = df[col] / float(sum(df[col]))
-	df = df[df[col] >= 0.02]
+	denom = sum(df[col])
+	df = df[df[col] >= 0.02*denom]
 
-	remainder = 1 - sum(df[col])
-	df.loc["Other", col] += remainder
+	diff = denom - sum(df[col])
+
+	if "Other" in df.index:
+		df.ix["Other"] += diff
 
 	return df
 
